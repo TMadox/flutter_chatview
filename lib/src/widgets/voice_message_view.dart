@@ -129,7 +129,7 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
                       playerController: controller,
                       waveformType: WaveformType.fitWidth,
                       playerWaveStyle: widget.config?.playerWaveStyle ?? playerWaveStyle,
-                      padding: widget.config?.waveformPadding ?? const EdgeInsets.only(right: 10),
+                      padding: widget.config?.waveformPadding ?? const EdgeInsets.only(right: 4),
                       margin: widget.config?.waveformMargin,
                       animationCurve: widget.config?.animationCurve ?? Curves.easeIn,
                       animationDuration: widget.config?.animationDuration ?? const Duration(milliseconds: 500),
