@@ -8,6 +8,7 @@ import 'package:chatview/src/widgets/reaction_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
 class VoiceMessageView extends StatefulWidget {
@@ -137,13 +138,14 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
               if (widget.message.voiceMessageDuration != null)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       formatDuration(widget.message.voiceMessageDuration!.inMilliseconds),
                       style: const TextStyle(color: Colors.white, height: 1),
                     ),
                     Text(
-                      '${widget.message.createdAt.hour.toString().padLeft(2, '0')}:${widget.message.createdAt.minute.toString().padLeft(2, '0')}',
+                      DateFormat('h:mm a').format(widget.message.createdAt),
                     )
                   ],
                 ),
