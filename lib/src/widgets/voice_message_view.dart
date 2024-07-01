@@ -144,14 +144,15 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
                     children: [
                       Text(
                         formatDuration(widget.message.voiceMessageDuration!.inMilliseconds),
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white, height: 1),
                       ),
                       Text(
                         DateFormat('h:mm a').format(widget.message.createdAt),
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white, height: 1),
                       )
                     ],
                   ),
+                const SizedBox(height: 4),
               ],
             ),
           ),
