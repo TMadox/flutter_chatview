@@ -100,56 +100,60 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
                 horizontal: 8,
                 vertical: widget.message.reaction.reactions.isNotEmpty ? 15 : 0,
               ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ValueListenableBuilder<PlayerState>(
-                    builder: (context, state, child) => IconButton(
-                      onPressed: _playOrPause,
-                      icon: state.isStopped || state.isPaused || state.isInitialised
-                          ? widget.config?.playIcon ??
-                              const Icon(
-                                Icons.play_arrow,
-                                color: Colors.white,
-                              )
-                          : widget.config?.pauseIcon ??
-                              const Icon(
-                                Icons.stop,
-                                color: Colors.white,
-                              ),
-                    ),
-                    valueListenable: _playerState,
-                  ),
-                  AudioFileWaveforms(
-                    size: Size(widget.screenWidth * 0.50, 40),
-                    playerController: controller,
-                    waveformType: WaveformType.fitWidth,
-                    playerWaveStyle: widget.config?.playerWaveStyle ?? playerWaveStyle,
-                    padding: widget.config?.waveformPadding ?? const EdgeInsets.only(right: 10),
-                    margin: widget.config?.waveformMargin,
-                    animationCurve: widget.config?.animationCurve ?? Curves.easeIn,
-                    animationDuration: widget.config?.animationDuration ?? const Duration(milliseconds: 500),
-                    enableSeekGesture: widget.config?.enableSeekGesture ?? true,
-                  ),
-                ],
-              ),
-              if (widget.message.voiceMessageDuration != null)
+          child: IntrinsicWidth(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      formatDuration(widget.message.voiceMessageDuration!.inMilliseconds),
-                      style: const TextStyle(color: Colors.white, height: 1),
+                    ValueListenableBuilder<PlayerState>(
+                      builder: (context, state, child) => IconButton(
+                        onPressed: _playOrPause,
+                        icon: state.isStopped || state.isPaused || state.isInitialised
+                            ? widget.config?.playIcon ??
+                                const Icon(
+                                  Icons.play_arrow,
+                                  color: Colors.white,
+                                )
+                            : widget.config?.pauseIcon ??
+                                const Icon(
+                                  Icons.stop,
+                                  color: Colors.white,
+                                ),
+                      ),
+                      valueListenable: _playerState,
                     ),
-                    Text(
-                      DateFormat('h:mm a').format(widget.message.createdAt),
-                    )
+                    AudioFileWaveforms(
+                      size: Size(widget.screenWidth * 0.50, 40),
+                      playerController: controller,
+                      waveformType: WaveformType.fitWidth,
+                      playerWaveStyle: widget.config?.playerWaveStyle ?? playerWaveStyle,
+                      padding: widget.config?.waveformPadding ?? const EdgeInsets.only(right: 10),
+                      margin: widget.config?.waveformMargin,
+                      animationCurve: widget.config?.animationCurve ?? Curves.easeIn,
+                      animationDuration: widget.config?.animationDuration ?? const Duration(milliseconds: 500),
+                      enableSeekGesture: widget.config?.enableSeekGesture ?? true,
+                    ),
                   ],
                 ),
-            ],
+                if (widget.message.voiceMessageDuration != null)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        formatDuration(widget.message.voiceMessageDuration!.inMilliseconds),
+                        style: const TextStyle(color: Colors.white, height: 1),
+                      ),
+                      Text(
+                        DateFormat('h:mm a').format(widget.message.createdAt),
+                        style: const TextStyle(color: Colors.white, height: 1),
+                      )
+                    ],
+                  ),
+              ],
+            ),
           ),
         ),
         if (widget.message.reaction.reactions.isNotEmpty)
