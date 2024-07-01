@@ -122,7 +122,7 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
                     valueListenable: _playerState,
                   ),
                   AudioFileWaveforms(
-                    size: Size(widget.screenWidth * 0.50, 60),
+                    size: Size(widget.screenWidth * 0.50, 40),
                     playerController: controller,
                     waveformType: WaveformType.fitWidth,
                     playerWaveStyle: widget.config?.playerWaveStyle ?? playerWaveStyle,
@@ -134,7 +134,19 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
                   ),
                 ],
               ),
-              Text(widget.message.voiceMessageDuration.toString()),
+              if (widget.message.voiceMessageDuration != null)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      formatDuration(widget.message.voiceMessageDuration!.inMilliseconds),
+                      style: const TextStyle(color: Colors.white, height: 1),
+                    ),
+                    Text(
+                      '${widget.message.createdAt.hour.toString().padLeft(2, '0')}:${widget.message.createdAt.minute.toString().padLeft(2, '0')}',
+                    )
+                  ],
+                ),
             ],
           ),
         ),
@@ -146,6 +158,12 @@ class _VoiceMessageViewState extends State<VoiceMessageView> {
           ),
       ],
     );
+  }
+
+  String formatDuration(int milliseconds) {
+    int minutes = (milliseconds / 60000).floor();
+    int seconds = ((milliseconds % 60000) / 1000).floor();
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
   }
 
   Future<void> _playOrPause() async {
